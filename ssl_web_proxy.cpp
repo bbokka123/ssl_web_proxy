@@ -155,10 +155,10 @@ SSL_CTX* load_server_context(char* s){
 void * ssl_proxy(void *fd){
 	int client_fd = *((int*)fd);
 	int n;
-	bzero(buf,bufsize);
-	n=read(client_fd, buf, bufsize);
+	bzero(buf,BUFSIZE);
+	n=read(client_fd, buf, BUFSIZE);
 	if(n<0) error("error reading from socket\n");
-	if(memcmp(uf,"CONNECT",7)!=0){close(child_fd); return NULL;}
+	if(memcmp(buf,"CONNECT",7)!=0){close(client_fd); return NULL;}
 	
 	char host[2000]={'\0',};
 	for(int i=0;;i++){
